@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[Contacts]
+(
+	[ContactId] INT CONSTRAINT PK_Contacts_ContactId PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	[Name] NVARCHAR(30) NOT NULL,
+	[MobilePhone] NVARCHAR(13) NOT NULL,
+	[JobTitle] NVARCHAR(50) NOT NULL, 
+	[BirthDate] DATE NOT NULL
+)

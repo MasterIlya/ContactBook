@@ -1,0 +1,181 @@
+﻿@model GeneralContactModel
+@{
+    int j = 1;
+    int id = 0;
+}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <title>Contacts</title>
+</head>
+<header class="container">
+    <ul class="nav justify-content-start " style="margin-top: 10px; margin-bottom: 10px">
+        <li class="nav-item">
+            <button type="button" class="btn btn-outline-success" style="margin-right: 10px" data-bs-toggle="modal" data-bs-target="#Modal">Add Contact</button>
+            <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="form">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="ModalLabel">Add contact</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="InputName" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="Name" asp-for="Contact.Name">
+                                    <span class="text-danger" asp-validation-for="Contact.Name" id="NameSpan"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="InputMobilePhone" class="form-label">Mobile Phone</label>
+                                    <input type="text" class="form-control" id="MobilePhone" asp-for="Contact.MobilePhone">
+                                    <span class="text-danger" asp-validation-for="Contact.MobilePhone" id="MobilePhoneSpan"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="InputJobTitle" class="form-label">Job Title</label>
+                                    <input type="text" class="form-control" id="JobTitle" asp-for="Contact.JobTitle">
+                                    <span class="text-danger" asp-validation-for="Contact.JobTitle" id="JobTitleSpan"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="InputBirthDate" class="form-label">Birth Date</label>
+                                    <input type="date" class="form-control" id="BirthDate" asp-for="Contact.BirthDate">
+                                    <span class="text-danger" asp-validation-for="Contact.BirthDate" id="BirthDateSpan"></span>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</header>
+<body>
+    <div class="container">
+        <table class="table table-success table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" class="">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Mobile Phone</th>
+                    <th scope="col">Job Title</th>
+                    <th scope="col">Birth Date</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var contact in Model.PaginationModel.Contacts)
+                {
+                    <tr>
+                        <th scope="row">@((Model.PaginationModel.CurrentPage - 1) * 10 + j++)</th>
+                        <td>@contact.Name</td>
+                        <td>@contact.MobilePhone</td>
+                        <td>@contact.JobTitle</td>
+                        <td>@contact.BirthDate.ToShortDateString()</td>
+                        <td>
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#Modal1" onclick="GetContact(@contact.ContactId)">Edit</button>
+                            <div class="modal fade" id="Modal1" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form id="form1">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="ModalLabel">Edit contact</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="InputName" class="form-label">Name</label>
+                                                    <input type="text" class="form-control" id="NameEdit" asp-for="Contact.Name">
+                                                    <span class="text-danger" asp-validation-for="Contact.Name" id="NameSpan"></span>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="InputMobilePhone" class="form-label">Mobile Phone</label>
+                                                    <input type="text" class="form-control" id="MobilePhoneEdit" asp-for="Contact.MobilePhone">
+                                                    <span class="text-danger" asp-validation-for="Contact.MobilePhone" id="MobilePhoneSpan"></span>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="InputJobTitle" class="form-label">Job Title</label>
+                                                    <input type="text" class="form-control" id="JobTitleEdit" asp-for="Contact.JobTitle">
+                                                    <span class="text-danger" asp-validation-for="Contact.JobTitle" id="JobTitleSpan"></span>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="InputBirthDate" class="form-label">Birth Date</label>
+                                                    <input type="date" class="form-control" id="BirthDateEdit" asp-for="Contact.BirthDate">
+                                                    <span class="text-danger" asp-validation-for="Contact.BirthDate" id="BirthDateSpan"></span>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <input type="number" hidden id="IdEdit" asp-for="Contact.ContactId">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Edit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <form asp-action="DeleteContact" asp-controller="Contacts" asp-route-id="@contact.ContactId" method="post">
+                                <button type="submit" class="btn btn-danger"
+                                onclick="if(confirm('You definitely want to delete the user!')) return true; else return false;"> Delete </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            @if (Model.PaginationModel.CurrentPage == 1)
+            {
+                <li class="page-item disabled">
+                    <a class="page-link" asp-action="GetContacts" asp-controller="Contacts"
+                   asp-route-currentPage="@(Model.PaginationModel.CurrentPage - 1)" aria-disabled="true">Previous</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="GetContacts" asp-controller="Contacts"
+                   asp-route-currentPage="@(Model.PaginationModel.CurrentPage - 1)" aria-disabled="true">Previous</a>
+                </li>
+            }
+            @for (int i = 0; i < Model.PaginationModel.CountOfPages; i++)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="GetContacts" asp-controller="Contacts"
+                   asp-route-currentPage="@(i + 1)">@(i + 1) </a>
+                </li>
+            }
+            @if (Model.PaginationModel.CurrentPage == Model.PaginationModel.CountOfPages || Model.PaginationModel.CountOfPages == 1)
+            {
+                <li class="page-item disabled">
+                    <a class="page-link" asp-action="GetContacts" asp-controller="Contacts"
+                   asp-route-currentPage="@(Model.PaginationModel.CurrentPage + 1)">Next</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="GetContacts" asp-controller="Contacts"
+                   asp-route-currentPage="@(Model.PaginationModel.CurrentPage + 1)">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</body>
+</html>
+<script src="~/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src="~/js/jquery-validate/jquery.validate.min.js"></script>
+<script src="~/js/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/AddContact.js"></script>
+<script src="~/js/GetContact.js"></script>
+<script src=~/js/EditContact.js></script>
+<script src="~/js/delete.js"></script>
