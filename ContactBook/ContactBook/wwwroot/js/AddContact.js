@@ -8,9 +8,10 @@ $('#form').submit(function (e) {
             "JobTitle": document.forms["form"].elements["JobTitle"].value,
             "BirthDate": document.forms["form"].elements["BirthDate"].value
         },
-        success: function () {
-            location.reload();
-        }
+        success: function (data) {
+            if (data.answer != "Ok") {
+                location.reload();
+            }
     });
     e.preventDefault();
 });

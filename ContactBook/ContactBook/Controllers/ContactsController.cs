@@ -33,7 +33,8 @@ namespace ContactBook.Controllers
             }
             else
             {
-                return Ok();
+                string answer = "Ok";
+                return Json(answer);
             }
         }
 
@@ -66,7 +67,8 @@ namespace ContactBook.Controllers
             }
             else
             {
-                return Ok();
+                string answer = "Ok";
+                return Json(answer);
             }
         }
     }

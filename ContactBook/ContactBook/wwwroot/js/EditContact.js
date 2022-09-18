@@ -9,8 +9,10 @@ $('#form1').submit(function (e) {
             "JobTitle": document.forms['form1'].elements["JobTitleEdit"].value,
             "BirthDate": document.forms['form1'].elements["BirthDateEdit"].value
         },
-        success: function () {
-            location.reload();
+        success: function (data) {
+            if (data.answer != "Ok") {
+                location.reload();
+            }
         }
     });
     e.preventDefault();
